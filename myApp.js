@@ -10,8 +10,14 @@ let absolutePath = __dirname + '/views/index.html'
 //     res.send("Hello Express")
 // })
 
-let middlewareFunction = express.static(__dirname)
-app.use(middlewareFunction)
+let staticMiddleware = express.static(__dirname)
+app.use(staticMiddleware)
+
+let requestLogMiddleware = (req, res, next) => {
+    console.log(req.method + " " + req.path + " - " + req.ip);
+    next()
+}
+app.use(requestLogMiddleware)
 
 app.get("/", (req, res)=>{
     res.sendFile(absolutePath)
