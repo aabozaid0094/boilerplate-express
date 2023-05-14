@@ -1,6 +1,7 @@
 let express = require('express');
 let app = express();
 require('dotenv').config()
+let bodyParser = require('body-parser');
 
 console.log("Hello World");
 
@@ -18,6 +19,9 @@ let requestLogMiddleware = (req, res, next) => {
     next()
 }
 app.use(requestLogMiddleware)
+
+let bodyParserMiddleware = bodyParser.urlencoded({extended: false})
+app.use(bodyParserMiddleware)
 
 app.get("/", (req, res)=>{
     res.sendFile(absolutePath)
